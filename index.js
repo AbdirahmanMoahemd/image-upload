@@ -39,7 +39,16 @@ const upload = multer({
 })
 
 app.post('/upload', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`)
+  console.log('Received image upload request');
+  
+    if (!req.file) {
+      console.log('No file received');
+      return res.status(400).send('No file received');
+    }
+    console.log('Image uploaded successfully');
+    res.status(200).res.send(`/${req.file.path}`);
+    
+
 })
 
 
