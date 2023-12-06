@@ -19,34 +19,18 @@ const storage = multer.diskStorage({
   },
 })
 
-function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-  const mimetype = filetypes.test(file.mimetype)
-
-  if (extname && mimetype) {
-    return cb(null, true)
-  } else {
-    cb('Images only!')
-  }
-}
-
-const upload = multer({
-  storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb)
-  },
-})
+const upload = multer({ storage: storage });
+ 
 
 app.post('/upload', upload.single('image'), (req, res) => {
-  console.log('Received image upload request');
+  console.log('Received image upload request'); 
   
     if (!req.file) {
       console.log('No file received');
       return res.status(400).send('No file received');
     }
     console.log('Image uploaded successfully');
-    res.status(200).res.send(`/${req.file.path}`);
+    res.status(200).send(`/${req.file.path}`);
     
 
 })
