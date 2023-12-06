@@ -18,6 +18,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post('/upload', upload.single('image'), (req, res) => {
+  console.log('Received image upload request');
+  
+  if (!req.file) {
+    console.log('No file received');
+    return res.status(400).send('No file received');
+  }
+  console.log('Image uploaded successfully');
   res.status(200).send('Image uploaded successfully');
 });
 
